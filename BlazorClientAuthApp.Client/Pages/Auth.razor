@@ -1,0 +1,68 @@
+﻿@page "/auth"
+
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient Http
+
+@attribute [Authorize]
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+<PageTitle>Auth</PageTitle>
+
+<h1>You are authenticated</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <p>Hello @context.User.Identity?.Name!</p>
+    </Authorized>
+</AuthorizeView>
+
+<h2>Protected server data</h2>
+
+@if (isLoading)
+{
+    <p><em>Loading data from the server...</em></p>
+}
+else if (loadError is not null)
+{
+    <p class="text-danger">@loadError</p>
+}
+else if (messages is { Length: > 0 })
+{
+    <ul>
+        @foreach (var message in messages)
+        {
+            <li>@message</li>
+        }
+    </ul>
+}
+
+@code {
+    private bool isLoading = true;
+    private string? loadError;
+    private string[]? messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using var response = await Http.GetAsync("api/auth-data");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                loadError = $"The server returned {(int)response.StatusCode} ({response.ReasonPhrase}).";
+                return;
+            }
+
+            messages = await response.Content.ReadFromJsonAsync<string[]>();
+        }
+        catch (Exception ex)
+        {
+            loadError = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

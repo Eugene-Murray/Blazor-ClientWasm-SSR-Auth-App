@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BlazorClientAuthApp.Client/BlazorClientAuthApp.Client.csproj" />
+  <Project Path="BlazorClientAuthApp/BlazorClientAuthApp.csproj" />
+</Solution>
