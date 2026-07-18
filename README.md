@@ -1,12 +1,10 @@
-# BlazorClientAuthApp
+# Blazor ClientWasm and SSR Auth App Example
 
 A .NET 10 Blazor Web App that demonstrates authentication and authorization using **ASP.NET Core Identity cookies** with interactive WebAssembly components.
 
 ## Authenticated experience
 
-> Add the attached screenshot file to `docs/images/authenticated-auth-page.png`.
-
-![Authenticated user on /auth page](docs/images/authenticated-auth-page.png)
+<img width="804" height="515" alt="image" src="https://github.com/user-attachments/assets/433032e5-b179-413c-ad4a-49709beccabb" />
 
 The screenshot shows a signed-in user accessing a protected page (`/auth`) and viewing server-protected data.
 
